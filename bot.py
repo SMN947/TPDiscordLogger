@@ -11,9 +11,11 @@ with open("config.json",'r') as f:
 
 TOKEN = CONFIG["token"]
 PREFIX = CONFIG["bot_prefix"]
+SERVERS = CONFIG["servers"]
 INTENTS = discord.Intents.default()
 BOT = commands.Bot(command_prefix=PREFIX, intents=INTENTS)
 STATUS = cycle(['Try * help','Prefix - *'])
+
 
 BOT.remove_command("help")
 
@@ -21,6 +23,10 @@ BOT.remove_command("help")
 async def on_ready():
     change_status.start()
     print('Bot is ready')
+    print("I am running as: " + str(BOT.user))
+    print('Bot is ready to be used')
+    guild = BOT.get_guild(889996341831421962)
+    print(guild)
 
 @BOT.event
 async def on_command_error(ctx, error):

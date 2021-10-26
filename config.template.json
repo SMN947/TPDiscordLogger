@@ -1,4 +1,5 @@
 {
   "bot_prefix": "*",
-  "token": "45gsdfgtwMzksdfsdcsdfFNjY2.EfvsfrR.5SDFvsdrVereRre5HDeg_cOsU"
+  "token": "45gsdfgtwMzksdfsdcsdfFNjY2.EfvsfrR.5SDFvsdrVereRre5HDeg_cOsU",
+  "AuthURL": "https://discord.com/api/oauth2/authorize?client_id=902182294788399104&permissions=103616685184&scope=bot"
 }
