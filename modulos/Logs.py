@@ -15,11 +15,10 @@ class Ayuda(commands.Cog):
 
     @commands.command(aliases=['logs', 'l'])
     async def _logs(self, ctx):
+        
+        await ctx.channel.trigger_typing()
         await ctx.reply("Procesando la generacion de CSVs de los logs de los servidoes")
         for server in SERVERS:
-            print(server)
-            print(server["name"])
-            print(server)
             f = open(os.path.join(os.getcwd() ,'ServerLog_'+str(server["name"])+'.csv'), 'w', newline='', encoding='utf-8')
             writer = csv.writer(f)
             rows = [["User", "Action", "Target", "Reason"]]

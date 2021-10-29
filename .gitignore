@@ -2,3 +2,9 @@
 config.json
 bot copy.py
 /modulos/__pycache__/*
+/functions/__pycache__/*
+/*.csv
+/jupyter
+/test*.*
+/*.zip
+/__pycache__/*

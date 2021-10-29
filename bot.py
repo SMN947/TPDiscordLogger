@@ -1,5 +1,6 @@
 import json
 import discord
+from datetime import datetime
 from itertools import cycle
 from discord.ext import tasks
 from discord.ext import commands
@@ -12,7 +13,7 @@ with open("config.json",'r') as f:
 TOKEN = CONFIG["token"]
 PREFIX = CONFIG["bot_prefix"]
 SERVERS = CONFIG["servers"]
-INTENTS = discord.Intents.default()
+INTENTS = discord.Intents().all()
 BOT = commands.Bot(command_prefix=PREFIX, intents=INTENTS)
 STATUS = cycle(['Try * help','Prefix - *'])
 
@@ -27,6 +28,14 @@ async def on_ready():
     print('Bot is ready to be used')
     guild = BOT.get_guild(889996341831421962)
     print(guild)
+
+@BOT.event
+async def on_member_update(before, after):
+    now = datetime.now()
+    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    channel = BOT.get_channel(903399230503280680)
+    print('{} | User {} changes from {} to {} in server {}'.format(current_time, before.name, before.status, after.status, before.guild))
+    await channel.send('{} | User {} changes from {} to {} in server {}'.format(current_time, before.name, before.status, after.status, before.guild))
 
 @BOT.event
 async def on_command_error(ctx, error):

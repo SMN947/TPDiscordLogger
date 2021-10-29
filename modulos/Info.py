@@ -14,6 +14,8 @@ class Info(commands.Cog):
 
     @commands.command(aliases=['info', 'botinfo', 'bi', 'status'])
     async def bot(self, ctx):
+        
+        await ctx.channel.trigger_typing()
         values = psutil.virtual_memory()
         val2 = values.available * 0.001
         val3 = val2 * 0.001
