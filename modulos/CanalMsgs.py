@@ -34,29 +34,19 @@ class CanalMsgs(commands.Cog):
                 rowsGb = [["actionId", "actionSource", "actionTarget", "actionAuthor", "actionAction", "actionReason", "actionTime"]]
                 canal = guild.get_channel(int(canal["id"]))
                 async for msg in canal.history(limit=None):
-                    print(str(msg.author))
                     if str(msg.author) == str("GearBot#7326"):
                         content = textProcessor.gearBot_Clean(msg.content)
-                        print("content OK")
-                        if(content != None):                        
-                            print(msg.content)
-                            print("Content is not none")
+                        if(content != None):
                             rowsGb.append([msg.id, msg.author, content["actionTarget"], content["actionAuthor"], content["actionAction"], content["actionReason"], msg.created_at])
-                        print("Content is none")
                     if("<:gearMute:scsc465177981221077003>" not in msg.content):
                         rows.append([msg.id, msg.author ,msg.content, msg.created_at])
-                    print("aññadido a rows")
                     
                     
                 writer.writerows(rows)
-                print("Escribiendo normal")
                 f.close()
-                print("cerrando normal")
 
                 writerGb.writerows(rowsGb)
-                print("escribiendo GB")
                 fGb.close()
-                print("Cerrado GB")
                 #Sending data trught the API
                 #Tener credenciales
                 #Enviar los datos
