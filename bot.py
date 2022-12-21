@@ -1,4 +1,5 @@
 import asyncio
+import csv
 import json
 import discord
 from datetime import datetime
@@ -8,6 +9,8 @@ from discord.ext import commands
 from discord.ext.commands import CommandNotFound
 import os
 
+from functions.textProcessor import textProcessor
+
 with open("config.json", 'r') as f:
     CONFIG = json.load(f)
 
@@ -15,6 +18,8 @@ TOKEN = CONFIG["token"]
 PREFIX = CONFIG["bot_prefix"]
 SERVERS = CONFIG["servers"]
 INTENTS = discord.Intents.default()
+INTENTS.guilds = True
+
 BOT = commands.Bot(command_prefix=PREFIX, intents=INTENTS)
 STATUS = cycle(['Try * help', 'Prefix - *'])
 
@@ -28,8 +33,6 @@ async def on_ready():
     print('Bot is ready')
     print("I am running as: " + str(BOT.user))
     print('Bot is ready to be used')
-    guild = BOT.get_guild(889996341831421962)
-    print(guild)
 
 
 @BOT.event
@@ -54,14 +57,7 @@ async def on_command_error(ctx, error):
 async def change_status():
     await BOT.change_presence(activity=discord.Game(next(STATUS)))
 
-# for filename in os.listdir('./modulos'):
-#     if filename.endswith('.py'):
-#         BOT.load_extension(f'modulos.{filename[:-3]}')
-
-################
-
-
-@commands.command(aliases=['cmsg', 'cm', 'gb'])
+@BOT.command(aliases=['cmsg', 'cm', 'gb'])
 async def _CanalMsgs(self, ctx):
     await ctx.channel.trigger_typing()
     for server in SERVERS:
@@ -105,31 +101,38 @@ async def _CanalMsgs(self, ctx):
             # await ctx.send(file=discord.File(os.path.join(os.getcwd() , fName)))
             await ctx.reply(file=discord.File(os.path.join(os.getcwd(), fNameGb)), mention_author=False)
 
-    @commands.command(aliases=['logs', 'l'])
-    async def _logs(self, ctx):
+@BOT.command(aliases=['logs', 'l'])
+async def _logs(ctx):
+    print("logs called")
+    print(ctx)
+    # await ctx.channel.trigger_typing()
+    await ctx.reply("Procesando la generacion de CSVs de los logs de los servidoes")
+    for server in SERVERS:
+        f = open(os.path.join(os.getcwd(), 'ServerLog_' +
+                    str(server["name"])+'.csv'), 'w', newline='', encoding='utf-8')
+        writer = csv.writer(f)
+        rows = [["User", "Action", "Target", "Reason"]]
+        guild = BOT.get_guild(int(server["id"]))
+        async for entry in guild.audit_logs(limit=None):
+            rows.append([entry.user, entry.action,
+                        entry.target, entry.reason])
+        print(guild)
 
-        await ctx.channel.trigger_typing()
-        await ctx.reply("Procesando la generacion de CSVs de los logs de los servidoes")
-        for server in SERVERS:
-            f = open(os.path.join(os.getcwd(), 'ServerLog_' +
-                     str(server["name"])+'.csv'), 'w', newline='', encoding='utf-8')
-            writer = csv.writer(f)
-            rows = [["User", "Action", "Target", "Reason"]]
-            guild = self.BOT.get_guild(int(server["id"]))
-            async for entry in guild.audit_logs(limit=None):
-                rows.append([entry.user, entry.action,
-                            entry.target, entry.reason])
+        writer.writerows(rows)
+        f.close()
+        await ctx.send(file=discord.File(os.path.join(os.getcwd(), 'ServerLog_'+str(server["name"])+'.csv')))
 
-            writer.writerows(rows)
-            f.close()
-            await ctx.send(file=discord.File(os.path.join(os.getcwd(), 'ServerLog_'+str(server["name"])+'.csv')))
-################
 
 
 @BOT.command()
 async def hello(ctx):
     msg = f'Hi {ctx.author.mention}'
     await ctx.reply(msg, mention_author=False)
+
+@BOT.command()
+async def add(ctx, num1: int, num2: int):
+    result = num1 + num2
+    await ctx.send('{} + {} = {}'.format(num1, num2, result))
 
 
 async def main():

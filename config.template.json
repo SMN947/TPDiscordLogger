@@ -1,34 +1,41 @@
-[{
-  "bot_prefix": "*",
-  "token": "45gsdfgtwMzksdfsdcsdfFNjY2.EfvsfrR.5SDFvsdrVereRre5HDeg_cOsU",
-  "AuthURL": "https://discord.com/api/oauth2/authorize?client_id=902182294788399104&permissions=103616685184&scope=bot"
-},
-{
-  "bot_prefix": "*",
-  "token": "OTAyMTgyMjk0Nzg4Mzk5MTA0.YXasvA.yepDFHv6Hoq0cbNaeQN1bVAf6-g",
-  "servers": [
-    {
-      "name": "TP Discord Nesting",
-      "id": 901117557929545798,
-      "canales": [
-        {
-          "name": "mod-logs",
-          "id": 901122115766472755
-        },{
-          "name": "bot-commands",
-          "id": 901122313175589004
-        },{
-          "name": "censor-logs",
-          "id": 901122350169325690
-        },{
-          "name": "mods-chat",
-          "id": 901122405639028847
-        }        
-      ]
-    }
-  ],
-  "APICredentials": {
-    "username": "ccms user",
-    "password": "123*123ABC"
-  }
-}]
+[
+	{
+		"bot_prefix": "*",
+		"token": "45gsdfgtwMzksdfsdcsdfFNjY2.EfvsfrR.5SDFvsdrVereRre5HDeg_cOsU",
+		"AuthURL": "https://discord.com/api/oauth2/authorize?client_id=902182294788399104&permissions=103616685184&scope=bot"
+	},
+	{
+		"bot_prefix": "*",
+		"token": "OTAyMTgyMjk0Nzg4Mzk5MTA0.YXasvA.yepDFHv6Hoq0cbNaeQN1bVAf6-g",
+		"servers": [
+			{
+				"name": "TP Discord Nesting",
+				"id": 901117557929545798,
+				"canales": [
+					{
+						"name": "mod-logs",
+						"id": 901122115766472755
+					},
+					{
+						"name": "bot-commands",
+						"id": 901122313175589004
+					},
+					{
+						"name": "censor-logs",
+						"id": 901122350169325690
+					},
+					{
+						"name": "mods-chat",
+						"id": 901122405639028847
+					}
+				]
+			}
+		],
+		"APICredentials": {
+			"username": "ccms user",
+			"password": "123*123ABC"
+		}
+	}
+]
+
+
